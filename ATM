@@ -1,0 +1,108 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+import java.util.ArrayList;
+class Account {
+    String accNo;
+    double balance;
+    ArrayList<String> transactions = new ArrayList<>();
+
+    Account(String accNo) {
+        this.accNo = accNo;
+        this.balance = 0.0;
+    }
+
+    void showBalance() {
+        System.out.println("Balance: " + balance);
+    }
+
+    void deposit(double amount) { 
+        balance += amount;
+        transactions.add("Deposited: " + amount);
+        System.out.println("Amount deposited!");
+    }
+
+    void withdraw(double amount) {
+        if (amount > balance) {
+            System.out.println("Insufficient balance!");
+        } else {
+            balance -= amount;
+            transactions.add("Withdrawn: " + amount);
+            System.out.println("Amount withdrawn!");
+        }
+    }
+
+    void showTransactions() {
+        if (transactions.isEmpty()) {
+            System.out.println("No transactions yet.");
+        } else {
+            for (String t : transactions) {
+                System.out.println(t);
+            }
+        }
+    }
+}
+
+public class ATM {
+    static HashMap<String, Account> accounts = new HashMap<>();
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        accounts.put("1234", new Account("1234"));
+
+        System.out.print("Enter Account Number: ");
+        String accNo = sc.nextLine();
+
+        Account acc = accounts.get(accNo);
+
+        if (acc == null) {
+            System.out.println("Account not found!");
+            return;
+        }
+
+        int choice;
+
+        do {
+            System.out.println("\n1. Check Balance");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Transaction History");
+            System.out.println("5. Exit");
+
+            System.out.print("Enter choice: ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    acc.showBalance();
+                    break;
+
+                case 2:
+                    System.out.print("Enter amount: ");
+                    double dep = sc.nextDouble();
+                    acc.deposit(dep);
+                    break;
+
+                case 3:
+                    System.out.print("Enter amount: ");
+                    double wit = sc.nextDouble();
+                    acc.withdraw(wit);
+                    break;
+
+                case 4:
+                    acc.showTransactions();
+                    break;
+
+                case 5:
+                    System.out.println("Thank you!");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+
+        } while (choice != 5);
+
+        sc.close();
+    }
+}
