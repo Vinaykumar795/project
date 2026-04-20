@@ -1,0 +1,95 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+class Employee{
+    String name;
+    int id;
+    String designation;
+    String email;
+    String phoneNumber;
+    int salary;
+    Employee(String name, int id, String designation, String email, String phoneNumber, int salary){
+        this.name = name;
+        this.id = id;
+        this.designation = designation;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.salary = salary;
+    }
+    void display(){
+        System.out.println("Name: " + name);
+        System.out.println("ID: " + id);
+        System.out.println("Designation: " + designation);
+        System.out.println("Email: " + email);
+        System.out.println("Phone Number: " + phoneNumber);
+        System.out.println("Salary: " + salary);
+    }
+}
+public class employeesystem{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Employee> employees = new ArrayList<>();
+        while (true) {
+            System.out.println("\n Employee Management System");
+            System.out.println("1. Add Employee");
+            System.out.println("2. Display Employees");
+            System.out.println("3. Search Employee");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter id ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter name ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter designation ");
+                    String designation = sc.nextLine();
+                    System.out.print("Enter email ");
+                    String email = sc.nextLine();
+                    System.out.print("Enter phone number ");
+                    String phoneNumber = sc.nextLine();
+                    System.out.print("Enter salary ");
+                    int salary = sc.nextInt();
+                    Employee emp = new Employee(name, id, designation, email, phoneNumber, salary);
+                    employees.add(emp);
+                    System.out.println("Employee added successfully!");
+                    break;
+                case 2:
+                    if (employees.isEmpty()) {
+                        System.out.println("No employees to display.");
+                    } else {
+                        for (Employee e : employees) {
+                            e.display();
+                            System.out.println();
+                        }
+                    }
+                    break;
+                case 3:
+                    System.out.print("Enter the employee id to search: ");
+                    int searchId = sc.nextInt();
+                    boolean found = false;
+                    for (Employee e : employees) {
+                        if (e.id == searchId) {
+                            e.display();
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("Employee not found.");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Exiting the system. Goodbye!");
+                    sc.close();
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
